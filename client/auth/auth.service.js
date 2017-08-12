@@ -11,7 +11,8 @@ function AuthService($auth,$state){
   var Auth = {
     login: login,
     logout: logout,
-    isAuthenticated: isAuthenticated
+    isAuthenticated: isAuthenticated,
+    isAdmin: isAdmin
   };
 
   function login(user){
@@ -40,6 +41,18 @@ function AuthService($auth,$state){
     if($auth.isAuthenticated()){
       return true;
     } else {
+      return false;
+    }
+  }
+
+  function isAdmin(){
+    if(Auth.isAuthenticated()){
+      if($auth.getPayload().roles.indexOf("ADMIN") !== -1){
+        return true;
+      }else{
+        return false;
+      }
+    }else{
       return false;
     }
   }

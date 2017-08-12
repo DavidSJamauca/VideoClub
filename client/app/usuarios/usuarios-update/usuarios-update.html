@@ -19,9 +19,12 @@
 	<label for="">Email</label>
 	<input type="text" ng-model="vm.usuario.email">
 
-	
 	<label for="">Sexo</label>
-	<input type="text" ng-model="vm.usuario.sexo">
+	<select ng-model="vm.usuario.sexo">
+		<option value="M">Masculino</option>
+		<option value="F">Femenino</option>
+		<option value="O">Otros</option>
+	</select>
 
 	<label for="">Departamentos</label>
 
