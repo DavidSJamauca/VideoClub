@@ -1,14 +1,16 @@
 <h3>Usuarios Update</h3>
 
 <form name="userForm" ng-submit="vm.updateUser()">
-<label for="">Tipo Documento</label>
-	<input type="text" ng-model="vm.usuario.tipoDocumento.id">
 
+	<label for="">Tipo Documento</label>
+	<select name="" id=""  ng-model="vm.usuario.tipoDocumento.id">
+		<option ng-value="{{item.id}}" ng-repeat="item in vm.tiposDocumentos">{{item.descripcion}}</option>
+	</select>
 
 	<label for="">Documento</label>
-	<input type="text" ng-model="vm.usuario.numDocumento">
+	<input type="number" ng-model="vm.usuario.numDocumento">
 
-<label for="">Apellidos</label>
+	<label for="">Apellidos</label>
 	<input type="text" ng-model="vm.usuario.apellidos">
 
 	<label for="">Nombres</label>

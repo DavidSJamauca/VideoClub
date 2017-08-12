@@ -9,7 +9,9 @@
 
 function AuthService($auth,$state){
   var Auth = {
-    login: login
+    login: login,
+    logout: logout,
+    isAuthenticated: isAuthenticated
   };
 
   function login(user){
@@ -22,6 +24,24 @@ function AuthService($auth,$state){
       $state.go("login");
       console.log("Error en el login");
     })
+  }
+
+  function logout(){
+    if(Auth.isAuthenticated()){
+      $auth.logout()
+      .then(response => {
+        $state.go("main");
+        console.log("Salida OK");
+      })
+    }
+  }
+
+  function isAuthenticated(){
+    if($auth.isAuthenticated()){
+      return true;
+    } else {
+      return false;
+    }
   }
 
   return Auth;

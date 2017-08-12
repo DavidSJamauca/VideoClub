@@ -6,14 +6,6 @@ function usuariosService($resource,API){
 	},{
 		update:{
 			method:'PUT'
-		},
-		createEmpleados:{
-			url:API+'/api/usuarios/empleados',
-			method:'POST'
-		},
-		createAdministrador:{
-			url:API+'/api/usuarios/administradores',
-			method:'POST'
 		}
 	});
 }
