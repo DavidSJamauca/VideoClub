@@ -7,7 +7,8 @@ class UsuariosCreateComponent {
     this.usuariosService = usuariosService;
     this.ciudadesService = ciudadesService;
     this.departamentosService = departamentosService;
-    this.tiposDocumentosService = tiposDocumentosService;
+		this.tiposDocumentosService = tiposDocumentosService;
+		this.showValidarDocumento = false;
   }
 
   $onInit(){
@@ -41,7 +42,17 @@ class UsuariosCreateComponent {
   	.catch(err=>{
   		console.log("Error al crear el usuario ",err);
   	})
-  }
+	}
+	validarNumDocumento(){
+		this.usuariosService.query({numDocumento:this.usuario.numDocumento}).$promise
+		.then(response => {
+			console.log("Valida", response);
+			this.showValidarDocumento = true;
+		})
+		.catch(err => {
+			console.log("No existe", err);
+		})
+	}
 }
 UsuariosCreateComponent.$inject = ['usuariosService','ciudadesService','departamentosService', 'tiposDocumentosService'];
 angular.module('videoClubApp')
