@@ -16,8 +16,6 @@ class UsuariosListComponent {
   	.catch(err => {
   		console.log("ERROR",err);
   	});
-
-
   }
 }
 

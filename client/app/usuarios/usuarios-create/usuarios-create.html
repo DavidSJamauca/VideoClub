@@ -6,9 +6,13 @@
 	<select name="" id=""  ng-model="vm.usuario.tipoDocumento.id">
 		<option ng-value="{{item.id}}" ng-repeat="item in vm.tiposDocumentos">{{item.descripcion}}</option>
 	</select>
-
+	<div class="form-group">
 	<label for="">Documento</label>
-	<input type="text" ng-model="vm.usuario.numDocumento">
+	<input class="form-control" type="text" ng-blur="vm.validarNumDocumento()" ng-model="vm.usuario.numDocumento">
+	</div>
+	<div ng-show="vm.showValidarDocumento" class="alert alert-danger" role="alert">
+		<p>El numero de documento ya se encuentra registrado</p>
+	</div>
 
 	<label for="">Apellidos</label>
 	<input type="text" ng-model="vm.usuario.apellidos">
