@@ -1,47 +1,71 @@
 <div>This is the usuarios-create view.</div>
 
-<form name="userForm" ng-submit="vm.createUser()">
+<form name="userForm" ng-submit="userForm.$valid && vm.createUser()" novalidate>
 
-	<label for="">Tipo Documento</label>
-	<select name="" id=""  ng-model="vm.usuario.tipoDocumento.id">
+    <label for="">Tipo Documento</label>
+    <select name="" id="" ng-model="vm.usuario.tipoDocumento.id">
 		<option ng-value="{{item.id}}" ng-repeat="item in vm.tiposDocumentos">{{item.descripcion}}</option>
 	</select>
-	<div class="form-group">
-	<label for="">Documento</label>
-	<input class="form-control" type="text" ng-blur="vm.validarNumDocumento()" ng-model="vm.usuario.numDocumento">
-	</div>
-	<div ng-show="vm.showValidarDocumento" class="alert alert-danger" role="alert">
-		<p>El numero de documento ya se encuentra registrado</p>
-	</div>
+    <div class="form-group">
+        <label for="">Documento</label>
+        <input class="form-control" type="text" ng-blur="vm.validarNumDocumento()" name="numDocumento" required minlength="7" maxlength="10" ng-pattern="/^[0-9]{1,20}$/" ng-model="vm.usuario.numDocumento">
+        <div class="" ng-messages="userForm.numDocumento.$error" ng-show="userForm.numDocumento.$dirty">
+            <div class="alert alert-danger" ng-show="vm.showValidarDocumento">
+                Numero de documento ya se encuentra registrado
+            </div>
+            <div class="alert alert-danger" ng-message="required">
+                Este campo es requerido
+            </div>
+            <div class="alert alert-danger" ng-message="minlength">
+                El documento debe tener minimo 7 caracteres
+            </div>
+            <div class="alert alert-danger" ng-message="pattern">
+                No es permitido el ingreso de letras
+            </div>
+        </div>
+    </div>
 
-	<label for="">Apellidos</label>
-	<input type="text" ng-model="vm.usuario.apellidos">
+    <label for="">Apellidos</label>
+    <input type="text" ng-model="vm.usuario.apellidos">
 
-	<label for="">Nombres</label>
-	<input type="text" ng-model="vm.usuario.nombres">
+    <label for="">Nombres</label>
+    <input type="text" ng-model="vm.usuario.nombres">
 
-	<label for="">Email</label>
-	<input type="text" ng-model="vm.usuario.email">
+    <div class="form-group">
+        <label for="">Email</label>
+        <input class="form-control" ng-blur="vm.validarEmail()" type="text" name="email" required ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/" ng-model="vm.usuario.email">
+        <div class="" ng-messages="userForm.email.$error" ng-show="userForm.email.$dirty">
+            <div class="alert alert-danger" ng-show="vm.showValidarEmail">
+                Email ya se encuentra registrado
+            </div>
+            <div class="alert alert-danger" ng-message="required">
+                Este campo es requerido
+            </div>
+            <div class="alert alert-danger" ng-message="minlength">
+                El email debe tener minimo 7 caracteres
+            </div>
+        </div>
+    </div>
 
-	<label for="">password</label>
-	<input type="password" ng-model="vm.usuario.password">
+    <label for="">password</label>
+    <input type="password" ng-model="vm.usuario.password">
 
-	<label for="">Sexo</label>
-	<select ng-model="vm.usuario.sexo">
+    <label for="">Sexo</label>
+    <select ng-model="vm.usuario.sexo">
 		<option value="M">Masculino</option>
 		<option value="F">Femenino</option>
 		<option value="O">Otros</option>
 	</select>
 
-	<select name="" id="" ng-model="vm.idDepartamento" ng-change="vm.getCiudades()">
+    <select name="" id="" ng-model="vm.idDepartamento" ng-change="vm.getCiudades()">
 		<option ng-value="{{item.id}}" ng-repeat="item in vm.departamentos">{{item.nombre}}</option>
 	</select>
 
-	<label for="">Ciudad</label>
-	<select name="" id=""  ng-model="vm.usuario.ciudad.id">
+    <label for="">Ciudad</label>
+    <select name="" id="" ng-model="vm.usuario.ciudad.id">
 		<option ng-value="{{item.id}}" ng-repeat="item in vm.ciudades">{{item.nombre}}</option>
 	</select>
 
-<button type="submit">Registrar</button>
+    <button type="submit" ng-disabled="userForm.$invalid">Registrar</button>
 
 </form>
