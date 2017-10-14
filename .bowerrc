@@ -1,5 +1,3 @@
 {
-    "directory": "client/bower_components",
-    "proxy": "http://proxy2.sena.edu.co:80",
-    "https-proxy": "http://proxy2.sena.edu.co:80"
+    "directory": "client/bower_components"
 }

@@ -7,8 +7,9 @@ angular.module('videoClubApp', [
         'ngSanitize',
         'ui.router',
         'ui.bootstrap',
-        "satellizer",
-        'ngMessages'
+        'satellizer',
+        'ngMessages',
+        'ngMaterial'
     ])
     .constant("API", "http://localhost:8080/adsi2017_1261718-master")
     .config(function($authProvider, API) {

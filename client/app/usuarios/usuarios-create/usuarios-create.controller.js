@@ -10,6 +10,11 @@
             this.tiposDocumentosService = tiposDocumentosService;
             this.showValidarDocumento = false;
             this.showValidarEmail = false;
+            this.usuario = {
+                ciudad: {
+                    id: null
+                }
+            }
         }
 
         $onInit() {
@@ -35,7 +40,23 @@
                 .catch(err => console.error(err));
         }
 
+        querySearch(searchText) {
+            return this.ciudadesService.getCiudades({ nombre: this.searchText }).$promise
+                .then(response => {
+                    return response;
+                })
+                .catch(err => console.error(err));
+        }
+
+        selectedItemChange(item) {
+            console.log("ITEM", item);
+            if (item != undefined) {
+                this.usuario.ciudad.id = item.id;
+            }
+        }
+
         createUser() {
+            console.log("USUARIO", this.usuario);
             this.usuariosService.save(this.usuario).$promise
                 .then(response => {
                     console.log("Usuario registrado correctamente ", response);
@@ -63,10 +84,10 @@
             this.usuariosService.query({ email: this.usuario.email }).$promise
                 .then(response => {
                     if (response.length == 0 || this.usuario.email == undefined) {
-                        console.log("Numero de documento correcto", response);
+                        console.log("Email correcto", response);
                         this.showValidarEmail = false;
                     } else {
-                        console.log("Numero de documento ya se encuentra registrado", response);
+                        console.log("Email ya se encuentra registrado", response);
                         this.showValidarEmail = true;
                     }
                 })
