@@ -12,8 +12,9 @@
         <div uib-collapse="vm.isCollapsed" class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav">
                 <li ui-sref-active="active" ng-if="vm.AuthService.isAdmin()"><a ui-sref="usuarios-list">Usuarios</a></li>
-                <li ui-sref-active="active" ng-if="vm.AuthService.isAdmin()"><a ui-sref="usuarios-create">Nuevo Usuario</a></li>
-                <li ui-sref-active="active"><a ui-sref="login">Ingresar</a></li>
+                <li ui-sref-active="active"><a ui-sref="usuarios-create">Nuevo Usuario</a></li>
+                <li ui-sref-active="active" ng-if="vm.AuthService.isAuthenticated()"><a ui-sref="perfil-update">Editar Perfil</a></li>
+                <li ui-sref-active="active" ng-hide="vm.AuthService.isAuthenticated()"><a ui-sref="login">Ingresar</a></li>
                 <li ui-sref-active="active" ng-if="vm.AuthService.isAuthenticated()"><a ng-click="vm.AuthService.logout()" h-ref="#">Cerrar Sesion</a></li>
             </ul>
         </div>

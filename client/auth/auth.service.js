@@ -4,20 +4,22 @@
  */
 'use strict';
 
-function AuthService($auth, $state) {
+function AuthService($auth, $state, localStorageService) {
     var Auth = {
         login: login,
         logout: logout,
         isAuthenticated: isAuthenticated,
         isAdmin: isAdmin,
         isUser: isUser,
-        getRoles: getRoles
+        getRoles: getRoles,
+        getIdUser: getIdUser
     };
 
     function login(user) {
         $auth.login(user)
             .then(response => {
                 $state.go("main");
+                localStorageService.set('idUsuarioLogueado', Auth.getIdUser());
                 console.log("Login Realizado correctamente");
             })
             .catch(err => {
@@ -72,6 +74,14 @@ function AuthService($auth, $state) {
             } else {
                 return false;
             }
+        } else {
+            return false;
+        }
+    }
+
+    function getIdUser() {
+        if (Auth.isAuthenticated()) {
+            return $auth.getPayload().sub
         } else {
             return false;
         }

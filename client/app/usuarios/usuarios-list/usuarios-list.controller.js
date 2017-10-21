@@ -1,30 +1,47 @@
 'use strict';
 
-(function(){
+(function() {
 
-class UsuariosListComponent {
-  constructor(usuariosService) {
-    this.usuariosService = usuariosService;
-  }
+    class UsuariosListComponent {
+        constructor(usuariosService, NavegateParams, $state) {
+            this.usuariosService = usuariosService;
+            this.NavegateParams = NavegateParams;
+            this.$state = $state;
+        }
 
-  $onInit(){
-  	this.usuariosService.query().$promise
-  	.then(response => {
-  		console.log("USUARIOS OK",response);
-      this.usuarios = response;
-  	})
-  	.catch(err => {
-  		console.log("ERROR",err);
-  	});
-  }
-}
+        cambiarStatus(item) {
+            this.usuariosService.update(item).$promise
+                .then(response => {
+                    alert("Cambio el estado");
+                })
+                .catch(err => {
+                    alert("No funciono");
+                })
+        }
 
-UsuariosListComponent.$inject = ['usuariosService'];
-angular.module('videoClubApp')
-  .component('usuariosList', {
-    templateUrl: 'app/usuarios/usuarios-list/usuarios-list.html',
-    controller: UsuariosListComponent,
-    controllerAs: 'vm'
-  });
+        $onInit() {
+            this.usuariosService.query().$promise
+                .then(response => {
+                    console.log("USUARIOS OK", response);
+                    this.usuarios = response;
+                })
+                .catch(err => {
+                    console.log("ERROR", err);
+                });
+        }
+
+        goUpdateUser(idUser) {
+            this.NavegateParams.setData('idUsuario', idUser);
+            this.$state.go("usuarios-update");
+        }
+    }
+
+    UsuariosListComponent.$inject = ['usuariosService', 'NavegateParams', '$state'];
+    angular.module('videoClubApp')
+        .component('usuariosList', {
+            templateUrl: 'app/usuarios/usuarios-list/usuarios-list.html',
+            controller: UsuariosListComponent,
+            controllerAs: 'vm'
+        });
 
 })();

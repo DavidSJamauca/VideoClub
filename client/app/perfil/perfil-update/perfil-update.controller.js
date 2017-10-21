@@ -2,15 +2,16 @@
 
 (function() {
 
-    class UsuariosUpdateComponent {
-        constructor(usuariosService, $stateParams, $state, ciudadesService, departamentosService, tiposDocumentosService, NavegateParams) {
+    class PerfilUpdateComponent {
+
+        constructor(usuariosService, $stateParams, $state, ciudadesService, departamentosService, tiposDocumentosService, localStorageService) {
             this.usuariosService = usuariosService;
             this.ciudadesService = ciudadesService;
             this.departamentosService = departamentosService;
             this.tiposDocumentosService = tiposDocumentosService;
             this.$stateParams = $stateParams;
             this.$state = $state;
-            this.NavegateParams = NavegateParams;
+            this.localStorageService = localStorageService;
         }
         $onInit() {
             this.departamentosService.query().$promise
@@ -25,7 +26,7 @@
                 })
                 .catch(err => console.error(err));
 
-            this.usuariosService.get({ id: this.NavegateParams.getData('idUsuario') }).$promise
+            this.usuariosService.get({ id: this.localStorageService.get('idUsuarioLogueado') }).$promise
                 .then(response => {
                     this.usuario = response;
                     console.log(this.usuario);
@@ -46,17 +47,16 @@
             this.usuariosService.update({ id: this.usuario.id }, this.usuario).$promise
                 .then(response => {
                     console.log("Usuario actualizado")
-                    this.$state.go('usuarios-list');
+                    this.$state.go('main');
                 })
                 .catch(err => console.error(err));
         }
 
     }
-
     angular.module('videoClubApp')
-        .component('usuariosUpdate', {
-            templateUrl: 'app/usuarios/usuarios-update/usuarios-update.html',
-            controller: UsuariosUpdateComponent,
+        .component('perfilUpdate', {
+            templateUrl: 'app/perfil/perfil-update/perfil-update.html',
+            controller: PerfilUpdateComponent,
             controllerAs: 'vm'
         });
 
